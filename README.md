@@ -23,3 +23,6 @@ EatSmart is a mobile app built with Flutter that simplifies meal planning and nu
 - **Nutritional Awareness**: Track calorie intake and nutritional values for better health choices.
 
 EatSmart offers a seamless experience for users to make informed decisions about their diet and nutrition.
+
+**Figma**
+https://www.figma.com/file/weEk3sr4ni75VDS9OR3sfn/EatSmart?type=design&node-id=0%3A1&mode=design&t=gqrfBaqCcynUwSNP-1
