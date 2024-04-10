@@ -17,7 +17,9 @@ class MyApp extends StatelessWidget {
           displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'Signika', fontWeight: FontWeight.bold),
         ),
       ),
-      home: RegisterScreen(),
+      home: LoginScreen(),
     );
   }
 }
+
+
