@@ -2,18 +2,22 @@
 
 import 'package:flutter/material.dart';
 
+
+
 class CustomTextField extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool hidden;
   final Color borderColor;
   Color fillColor;
+  TextEditingController controller;
 
-  CustomTextField({required this.icon, required this.label, required this.hidden, required this.borderColor, required this.fillColor});
+  CustomTextField({required this.icon, required this.label, required this.hidden, required this.borderColor, required this.fillColor, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: borderColor), 

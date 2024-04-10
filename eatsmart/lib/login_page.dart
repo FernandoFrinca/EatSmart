@@ -1,8 +1,32 @@
 
+import 'package:eatsmart/register_page.dart';
 import 'package:eatsmart/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+   TextEditingController emailController = TextEditingController();
+   TextEditingController passwordController = TextEditingController();
+
+  Future<void> _handleLOGIN() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+    print(emailController.text);
+    print("Logined with: $email, $password");
+  }
+
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +51,8 @@ class LoginScreen extends StatelessWidget {
               label: 'Your email',
               hidden: false,
               borderColor: const Color.fromRGBO(255, 255, 255, 1),
-              fillColor:  const Color.fromRGBO(222, 216, 109,1),
+              fillColor:  const Color.fromRGBO(222, 216, 109,1), 
+              controller: emailController,
             ),
             const SizedBox(height: 16),
             CustomTextField(
@@ -36,11 +61,13 @@ class LoginScreen extends StatelessWidget {
               hidden: true,
               borderColor: const Color.fromRGBO(255, 255, 255, 1),
               fillColor: const Color.fromRGBO(93, 93, 93, 1),
+              controller: passwordController,
             ),
             const SizedBox(height: 24,),
             CustomButton(
-              text: 'LOG IN',
+              text: 'Log in',
               onPressed: () {
+                _handleLOGIN();
               },
 
              buttonWidth: MediaQuery.of(context).size.width * 0.5,
@@ -48,7 +75,10 @@ class LoginScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  );
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.black, 
