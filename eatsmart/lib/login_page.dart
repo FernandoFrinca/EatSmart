@@ -1,4 +1,5 @@
 
+import 'package:eatsmart/account_backend/login.dart';
 import 'package:eatsmart/register_page.dart';
 import 'package:eatsmart/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomButton(
               text: 'Log in',
               onPressed: () {
+                login_function(emailController.text, passwordController.text);
                 _handleLOGIN();
               },
 

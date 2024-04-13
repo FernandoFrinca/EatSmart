@@ -1,3 +1,6 @@
+
+// ignore_for_file: empty_catches
+
 import 'dart:ffi';
 
 import 'package:eatsmart/widgets/widgets.dart';
@@ -11,32 +14,50 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final nameController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
+  final userHeighController = TextEditingController();
+  final userWeightController = TextEditingController();
+  final userSexController = TextEditingController();
+  final userObjectiveController = TextEditingController();
+  double userHeigh = 0;
+  double userWeight = 0;
+  
   void dispose() {
-    nameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    userHeighController.dispose();
+    userWeightController.dispose();
     super.dispose();
   }
   Future<void> _handleRegistration() async {
-    String name = nameController.text;
+    String firstName = firstNameController.text;
+    String lastName = lastNameController.text;
     String email = emailController.text;
     String password = passwordController.text;
-    print("Registering with: $name, $email, $password"); 
+    String userHeight = userHeighController.text;
+    String userWeight = userWeightController.text;
+    String userSex = userSexController.text;
+    String userObjective = userObjectiveController.text;
+    print("Registering with: $firstName, $lastName, $email, $password, $userHeight, $userWeight, $userSex, $userObjective"); 
   }
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(165, 221, 155, 1.0),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            SizedBox(height: screenHeight * 0.09),
             Text(
               'Register',
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
@@ -45,16 +66,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 98),
+             SizedBox(height: screenHeight * 0.09),
             CustomTextField(
               icon: Icons.person,
-              label: 'Your name',
+              label: 'First name',
               hidden: false,
               borderColor: const Color.fromRGBO(255, 255, 255, 1),
               fillColor: const Color.fromRGBO(222, 216, 109,1),
-              controller: nameController,
+              controller: firstNameController,
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: screenHeight * 0.02),
+            CustomTextField(
+              icon: Icons.person,
+              label: 'Last name',
+              hidden: false,
+              borderColor: const Color.fromRGBO(255, 255, 255, 1),
+              fillColor: const Color.fromRGBO(222, 216, 109,1),
+              controller: lastNameController,
+            ),
+             SizedBox(height: screenHeight * 0.02),
             CustomTextField(
               icon: Icons.email,
               label: 'Your email',
@@ -63,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               fillColor: const Color.fromRGBO(93, 93, 93, 1),
               controller: emailController,
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: screenHeight * 0.02),
             CustomTextField(
               icon: Icons.lock,
               label: 'Create Password',
@@ -72,14 +102,103 @@ class _RegisterScreenState extends State<RegisterScreen> {
               fillColor: const Color.fromRGBO(93, 93, 93, 1),
               controller: passwordController,
             ),
-            const SizedBox(height: 24),
+             SizedBox(height: screenHeight * 0.02),
+            
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      width: screenWidth * 0.4, // Set the width as needed
+                      child:CustomDropdownButton<String>(
+                      items:  List.generate(200, (index) => "${((index + 100) / 100).toStringAsFixed(2)} cm"),
+                      value: "Height",
+                      controller: userHeighController,
+                      onChanged: (value){
+                        setState(() {
+                          userHeighController.text = value ?? '';
+                        });
+                      },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: screenWidth*0.02,),
+                Column(children: [
+                    SizedBox(
+                      width: screenWidth * 0.4, // Set the width as needed
+                      child:CustomDropdownButton<String>(
+                      items:   List.generate(342, (index) =>'${(30 + (index * 0.5)).toStringAsFixed(1)} kg'),
+                      value: "Weight",
+                      controller: userWeightController,
+                      onChanged: (value){
+                        setState(() {
+                          userWeightController.text = value ?? '';
+                        });
+                      },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+             SizedBox(height: screenHeight * 0.02),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                 Column(
+                  children: [
+                    SizedBox(
+                      width: screenWidth * 0.4, // Set the width as needed
+                      child: CustomDropdownButton<String>(
+                        items: const ['Male', 'Female'],
+                        value: "Sex",
+                        controller: userSexController,
+                        onChanged: (value){
+                        setState(() {
+                          userSexController.text = value ?? '';
+                        });
+                      },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: screenWidth*0.02,),
+                 Column(children: [
+                    SizedBox(
+                      width: screenWidth * 0.4, // Set the width as needed
+                      child: CustomDropdownButton<String>(
+                      items: const ['BULK', 'CUT', 'MAINTAIN'],
+                      value: "Objective",
+                      controller: userObjectiveController,
+                      onChanged: (value){
+                        setState(() {
+                          userObjectiveController.text = value ?? '';
+                        });
+                      },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            
+            SizedBox(height: screenHeight * 0.03),
             CustomButton(
               text: 'REGISTER',
               onPressed: () {
-                register_function(nameController.text, nameController.text, emailController.text,  passwordController.text, "image", "Male", 1.75, 80, "BULK", 1);
+                try{
+                  userHeigh = double.parse((userHeighController.text).substring(0,4));
+                  userWeight = double.parse((userWeightController.text).replaceAll(' kg', ''));
+                }catch (e){}
+                register_function(firstNameController.text, lastNameController.text, emailController.text,  passwordController.text, "image", userSexController.text, userHeigh, userWeight, userObjectiveController.text, 1);
                 _handleRegistration();
+
               },
-              buttonWidth: MediaQuery.of(context).size.width * 0.5,
+              buttonWidth: screenWidth * 0.5,
               buttonHeight: 50.0,
             ),
             TextButton(
