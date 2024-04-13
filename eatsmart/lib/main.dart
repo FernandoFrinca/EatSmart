@@ -1,5 +1,4 @@
 import 'package:eatsmart/login_page.dart';
-import 'package:eatsmart/register_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
