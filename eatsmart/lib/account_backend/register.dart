@@ -2,19 +2,44 @@ import 'package:postgres/postgres.dart';
 void db_start(){
   
 }
-void register_function(String lastname, String firstname, String email, String password, String image, String sex, double height, double weight, String objective, int pantry_id) async {
+Future<bool> register_function(String lastname, String firstname, String email, String password, String image, String sex, double height, double weight, String objective, int pantryId) async {
   
-  bool add_flag_lastname = true;
-  bool add_flag_firstname = true;
-  bool add_flag_email = true;
-  bool add_flag_password = true;
-  bool add_flag_image = true;
-  bool add_flag_sex = true;
-  bool add_flag_height = true;
-  bool add_flag_weight = true;
-  bool add_flag_objective = true;
-  bool add_flag_pantry = true;
+  bool addFlagLastname = true;
+  bool addFlagFirstname = true;
+  bool addFlagEmail = true;
+  bool addFlagPassword = true;
+  bool addFlagImage = true;
+  bool addFlagSex = true;
+  bool addFlagHeight = true;
+  bool addFlagWeight = true;
+  bool addFlagObjective = true;
+  bool addFlagPantry = true;
   String hashedPassword="";
+  //Please fill in all fields
+  if (lastname == '') {
+    addFlagLastname=false;
+  }
+  if (firstname == '') {
+    addFlagFirstname=false;
+  }
+  if (email == '') {
+    addFlagEmail=false;
+  }
+  if (password == '') {
+    addFlagPassword=false;
+  }
+  if (sex == '') {
+    addFlagSex=false;
+  }
+  if (height == 0) {
+    addFlagHeight=false;
+  }
+  if (weight == 0) {
+    addFlagWeight=false;
+  }
+  if (objective == '') {
+    addFlagObjective=false;
+  }
   //conect to database
   final conn = PostgreSQLConnection(
     '10.0.2.2',
@@ -31,14 +56,14 @@ try{
     if(password != "") {
       hashedPassword = password.hashCode.toString();
     } else{
-      add_flag_password = false;
+      addFlagPassword = false;
     }
 
   //email unic
-    final List<List<dynamic>> emails_lists = await conn.query('SELECT email FROM users');
+    final List<List<dynamic>> emailsLists = await conn.query('SELECT email FROM users');
     final List<String> emails = [];
 
-    for (final row in emails_lists) {
+    for (final row in emailsLists) {
       final email = row[0].toString();
       emails.add(email);
     }
@@ -46,30 +71,33 @@ try{
     int i;
     for(i = 0; i < emails.length; i++){
       if(emails[i] == email){
-        add_flag_email = false;
+        addFlagEmail = false;
       }
     }
     if(email == ""){
-      add_flag_email = false;
+      addFlagEmail = false;
     }
-    if(add_flag_email){
+    if(addFlagEmail){
       print("\n email ok\n");
     }
 
     //add element to the database
-    if(add_flag_lastname && add_flag_firstname && add_flag_email && add_flag_password && add_flag_image && add_flag_sex && add_flag_height && add_flag_weight && add_flag_objective && add_flag_pantry){
+    if(addFlagLastname && addFlagFirstname && addFlagEmail && addFlagPassword && addFlagImage && addFlagSex && addFlagHeight && addFlagWeight && addFlagObjective && addFlagPantry){
       await conn.query('''
         INSERT INTO users (lastname, firstname, email, password, image, sex, height, weight, objective, pantry_id)
-        VALUES ('$lastname', '$firstname', '$email', '$hashedPassword', '$image', '$sex', $height, $weight, '$objective', $pantry_id)
+        VALUES ('$lastname', '$firstname', '$email', '$hashedPassword', '$image', '$sex', $height, $weight, '$objective', $pantryId)
       ''');
+      return false;
     }
     else{
+      await conn.close();
       print("register fail");
+      return true;
     }
   }
-catch(e){
-  print("register fail");
-}
-
-  await conn.close();
+  catch(e){
+    await conn.close();
+    print("register fail");
+    return true;
+  }
 }

@@ -10,16 +10,27 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>{
 
    TextEditingController emailController = TextEditingController();
    TextEditingController passwordController = TextEditingController();
+   bool flagLogin = false;
 
   Future<void> _handleLOGIN() async {
     String email = emailController.text;
     String password = passwordController.text;
     print(emailController.text);
     print("Logined with: $email, $password");
+    flagLogin = await login_function(emailController.text, passwordController.text);
+    if (flagLogin) {
+      setState(() {
+        flagLogin = false;
+      });
+    } else {
+      setState(() {
+        flagLogin = true;
+      });
+    }
   }
 
   void dispose() {
@@ -27,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,14 +74,24 @@ class _LoginScreenState extends State<LoginScreen> {
               fillColor: const Color.fromRGBO(93, 93, 93, 1),
               controller: passwordController,
             ),
+            Center(
+              child: Visibility(
+                visible: flagLogin, // Verifică starea flagului pentru a decide dacă afișezi sau nu textul
+                child: const Text(
+                  'Wrong Password or Email',
+                  style: TextStyle(
+                    color: Colors.red, // Setează culoarea textului la roșu
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 24,),
             CustomButton(
               text: 'Log in',
               onPressed: () {
-                login_function(emailController.text, passwordController.text);
+                //refreshState();
                 _handleLOGIN();
               },
-
              buttonWidth: MediaQuery.of(context).size.width * 0.5,
              buttonHeight: 50.0
             ),
