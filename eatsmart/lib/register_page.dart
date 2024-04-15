@@ -24,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final userObjectiveController = TextEditingController();
   double userHeigh = 0;
   double userWeight = 0;
+  bool flagRegister = false;
   
   void dispose() {
     firstNameController.dispose();
@@ -34,16 +35,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
     userWeightController.dispose();
     super.dispose();
   }
-  Future<void> _handleRegistration() async {
+  Future<bool> _handleRegistration() async {
     String firstName = firstNameController.text;
     String lastName = lastNameController.text;
     String email = emailController.text;
     String password = passwordController.text;
-    String userHeight = userHeighController.text;
-    String userWeight = userWeightController.text;
     String userSex = userSexController.text;
     String userObjective = userObjectiveController.text;
-    print("Registering with: $firstName, $lastName, $email, $password, $userHeight, $userWeight, $userSex, $userObjective"); 
+    print("Registering with: $firstName, $lastName, $email, $password, $userHeigh, $userWeight, $userSex, $userObjective"); 
+
+    flagRegister = await  register_function(firstNameController.text, lastNameController.text, emailController.text,  passwordController.text, "image", userSexController.text, userHeigh, userWeight, userObjectiveController.text, 1);
+    
+    if (flagRegister == false) {
+      setState(() {
+        flagRegister = false;
+      });
+      return true;
+      // ignore: use_build_context_synchronously
+    }else {
+      setState(() {
+        flagRegister = true;
+      });
+      return false;
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -185,18 +199,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ],
             ),
-            
-            SizedBox(height: screenHeight * 0.03),
+            SizedBox(height: screenHeight * 0.003),
+            Center(
+              child: Visibility(
+                visible: flagRegister, // Verifică starea flagului pentru a decide dacă afișezi sau nu textul
+                child: const Text(
+                  'Please fill in all fields',
+                  style: TextStyle(
+                    color: Colors.red, // Setează culoarea textului la roșu
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.003),
             CustomButton(
               text: 'REGISTER',
-              onPressed: () {
+              onPressed: () async {
                 try{
                   userHeigh = double.parse((userHeighController.text).substring(0,4));
                   userWeight = double.parse((userWeightController.text).replaceAll(' kg', ''));
                 }catch (e){}
-                register_function(firstNameController.text, lastNameController.text, emailController.text,  passwordController.text, "image", userSexController.text, userHeigh, userWeight, userObjectiveController.text, 1);
-                _handleRegistration();
-
+                if(await _handleRegistration()){
+                  Navigator.pop(context);
+                }
               },
               buttonWidth: screenWidth * 0.5,
               buttonHeight: 50.0,

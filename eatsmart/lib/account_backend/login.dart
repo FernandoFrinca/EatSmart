@@ -2,7 +2,7 @@ import 'package:postgres/postgres.dart';
 void db_start(){
   
 }
-void login_function(String email, String password) async {
+Future<bool> login_function(String email, String password) async {
   
   String hashedPassword = "";
   bool add_flag_password = true;
@@ -39,13 +39,16 @@ void login_function(String email, String password) async {
       final String password_extracted = results[0][1] as String;
       if(emailAddress == email && password_extracted == hashedPassword){
         print("Login succes");
+        return true;
       }else{
         print("login faild");
+        return false;
       }
 
     }catch (e) {
       print("login faild");
+      return false;
     }
   }
-
+  return false;
 }

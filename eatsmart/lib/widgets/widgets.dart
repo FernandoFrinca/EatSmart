@@ -69,7 +69,7 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
                         if (widget.onChanged != null) {
                           widget.onChanged!(widget.items[index]);
                         }
-                        Navigator.pop(context); // Close the dialog
+                        Navigator.pop(context); 
                       },
                     );
                   },
@@ -82,7 +82,7 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color.fromRGBO(93, 93, 93, 1), // Fill with blue color
+          color: const Color.fromRGBO(93, 93, 93, 1), 
           borderRadius: BorderRadius.circular(20.0),
           border: Border.all(
             color: const Color.fromRGBO(93, 93, 93, 1),
