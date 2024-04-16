@@ -1,6 +1,5 @@
 
 // ignore_for_file: empty_catches
-
 import 'dart:ffi';
 
 import 'package:eatsmart/widgets/widgets.dart';
@@ -51,7 +50,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         flagRegister = false;
       });
       return true;
-      // ignore: use_build_context_synchronously
     }else {
       setState(() {
         flagRegister = true;
@@ -125,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Column(
                   children: [
                     SizedBox(
-                      width: screenWidth * 0.4, // Set the width as needed
+                      width: screenWidth * 0.4, 
                       child:CustomDropdownButton<String>(
                       items:  List.generate(200, (index) => "${((index + 100) / 100).toStringAsFixed(2)} cm"),
                       value: "Height",
@@ -142,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(width: screenWidth*0.02,),
                 Column(children: [
                     SizedBox(
-                      width: screenWidth * 0.4, // Set the width as needed
+                      width: screenWidth * 0.4, 
                       child:CustomDropdownButton<String>(
                       items:   List.generate(342, (index) =>'${(30 + (index * 0.5)).toStringAsFixed(1)} kg'),
                       value: "Weight",
@@ -166,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                  Column(
                   children: [
                     SizedBox(
-                      width: screenWidth * 0.4, // Set the width as needed
+                      width: screenWidth * 0.4, 
                       child: CustomDropdownButton<String>(
                         items: const ['Male', 'Female'],
                         value: "Sex",
@@ -183,7 +181,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(width: screenWidth*0.02,),
                  Column(children: [
                     SizedBox(
-                      width: screenWidth * 0.4, // Set the width as needed
+                      width: screenWidth * 0.4, 
                       child: CustomDropdownButton<String>(
                       items: const ['BULK', 'CUT', 'MAINTAIN'],
                       value: "Objective",
@@ -202,11 +200,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SizedBox(height: screenHeight * 0.003),
             Center(
               child: Visibility(
-                visible: flagRegister, // Verifică starea flagului pentru a decide dacă afișezi sau nu textul
+                visible: flagRegister, 
                 child: const Text(
                   'Please fill in all fields',
                   style: TextStyle(
-                    color: Colors.red, // Setează culoarea textului la roșu
+                    color: Colors.red, 
                   ),
                 ),
               ),
@@ -228,7 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Assuming this would go back to the login screen
+                Navigator.pop(context); 
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.black,

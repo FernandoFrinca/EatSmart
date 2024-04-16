@@ -47,7 +47,7 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                height: 180, // Adjust the height as needed
+                height: 180, 
                 padding: const EdgeInsets.all(10.0),
                 child: ListView.builder(
                   itemCount: widget.items.length,
