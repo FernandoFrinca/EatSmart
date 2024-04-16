@@ -25,7 +25,6 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
-        // Check if product is found and has a name
         if (responseData['status'] == 1 && responseData['product']['product_name'] != null) {
           final String productName = responseData['product']['product_name'];
           return productName;
@@ -33,7 +32,6 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
           return 'Product not found';
         }
       } else {
-        // Handle the case where the API server returns an error
         print('Server error: ${response.statusCode}');
         return 'Product not found';
       }
@@ -44,7 +42,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   }
 
 Future<void> scanBarcode() async {
-  if (isScanning) return; // Prevent reentry if already scanning
+  if (isScanning) return;
 
   setState(() {
     isScanning = true;
@@ -114,12 +112,11 @@ Widget build(BuildContext context) {
             color: Color.fromARGB(255, 253, 214, 173),
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: ListTile(
-              leading: Icon(Icons.check_circle_outline), // Consider replacing with thumbnail if available
+              leading: Icon(Icons.check_circle_outline),
               title: Text(
                 scannedItems[index],
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              //subtitle: Text("Scanned item details"),
               trailing: IconButton(
                 icon: Icon(Icons.delete, color: const Color.fromARGB(255, 25, 25, 25)),
                 onPressed: () {
@@ -136,13 +133,11 @@ Widget build(BuildContext context) {
     floatingActionButton: FloatingActionButton.extended(
   onPressed: scanBarcode,
   icon: Icon(Icons.camera_alt),
-  label: Text('Scan'),  // Text label next to the icon
+  label: Text('Scan'),  
   backgroundColor: Color.fromARGB(255, 253, 214, 173),
   foregroundColor: Colors.white,
 ),
   );
 }
-
-
 
 }
