@@ -1,4 +1,5 @@
 
+import 'package:eatsmart/Home_page.dart';
 import 'package:eatsmart/account_backend/login.dart';
 import 'package:eatsmart/register_page.dart';
 import 'package:eatsmart/widgets/widgets.dart';
@@ -16,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen>{
    TextEditingController passwordController = TextEditingController();
    bool flagLogin = false;
 
-  Future<void> _handleLOGIN() async {
+  Future<bool> _handleLOGIN() async {
     String email = emailController.text;
     String password = passwordController.text;
     print(emailController.text);
@@ -26,10 +27,12 @@ class _LoginScreenState extends State<LoginScreen>{
       setState(() {
         flagLogin = false;
       });
+      return true;
     } else {
       setState(() {
         flagLogin = true;
       });
+      return true;
     }
   }
 
@@ -76,11 +79,11 @@ class _LoginScreenState extends State<LoginScreen>{
             ),
             Center(
               child: Visibility(
-                visible: flagLogin, // Verifică starea flagului pentru a decide dacă afișezi sau nu textul
+                visible: flagLogin, 
                 child: const Text(
                   'Wrong Password or Email',
                   style: TextStyle(
-                    color: Colors.red, // Setează culoarea textului la roșu
+                    color: Colors.red, 
                   ),
                 ),
               ),
@@ -88,9 +91,13 @@ class _LoginScreenState extends State<LoginScreen>{
             const SizedBox(height: 24,),
             CustomButton(
               text: 'Log in',
-              onPressed: () {
-                //refreshState();
-                _handleLOGIN();
+              onPressed: () async {
+                if(await _handleLOGIN()){
+                      Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                }
               },
              buttonWidth: MediaQuery.of(context).size.width * 0.5,
              buttonHeight: 50.0
