@@ -1,6 +1,8 @@
 
-import 'package:eatsmart/Home_page.dart';
+// ignore_for_file: avoid_print, use_build_context_synchronously, library_private_types_in_public_api
+
 import 'package:eatsmart/account_backend/login.dart';
+import 'package:eatsmart/main.dart';
 import 'package:eatsmart/register_page.dart';
 import 'package:eatsmart/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +34,11 @@ class _LoginScreenState extends State<LoginScreen>{
       setState(() {
         flagLogin = true;
       });
-      return true;
+      return false;
     }
   }
 
+  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
@@ -64,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen>{
               icon: Icons.email,
               label: 'Your email',
               hidden: false,
-              borderColor: const Color.fromRGBO(255, 255, 255, 1),
+              borderColor: Colors.white,
               fillColor:  const Color.fromRGBO(222, 216, 109,1), 
               controller: emailController,
             ),
@@ -73,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen>{
               icon: Icons.lock,
               label: 'Password',
               hidden: true,
-              borderColor: const Color.fromRGBO(255, 255, 255, 1),
+              borderColor: Colors.white,
               fillColor: const Color.fromRGBO(93, 93, 93, 1),
               controller: passwordController,
             ),
@@ -95,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen>{
                 if(await _handleLOGIN()){
                       Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const MainScreen()),
                   );
                 }
               },
@@ -106,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen>{
               onPressed: () {
                  Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  MaterialPageRoute(builder: (context) => const RegisterScreen()),
                   );
               },
               style: TextButton.styleFrom(
