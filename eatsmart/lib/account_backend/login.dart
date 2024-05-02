@@ -1,3 +1,6 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
+import 'package:eatsmart/account_backend/global.dart';
 import 'package:postgres/postgres.dart';
 void db_start(){
   
@@ -38,13 +41,22 @@ Future<bool> login_function(String email, String password) async {
       final String emailAddress = results[0][0] as String;
       final String password_extracted = results[0][1] as String;
       if(emailAddress == email && password_extracted == hashedPassword){
-        print("Login succes");
+        int extractedID;
+        var result = await conn.query(
+        'SELECT ID FROM users WHERE email = @email',
+        substitutionValues: {'email': email}
+        );
+      if (result.isNotEmpty) {
+        extractedID = result.first[0] as int;
+        print("Login success with ID: $extractedID"); 
+        setID(extractedID);
         return true;
+      
       }else{
         print("login faild");
         return false;
       }
-
+    }
     }catch (e) {
       print("login faild");
       return false;

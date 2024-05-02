@@ -1,7 +1,5 @@
 
-// ignore_for_file: empty_catches
-import 'dart:ffi';
-
+// ignore_for_file: empty_catches, library_private_types_in_public_api, avoid_print, use_build_context_synchronously
 import 'package:eatsmart/widgets/widgets.dart';
 import 'package:eatsmart/account_backend/register.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   double userWeight = 0;
   bool flagRegister = false;
   
+  @override
   void dispose() {
     firstNameController.dispose();
     lastNameController.dispose();
@@ -125,9 +124,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       width: screenWidth * 0.4, 
                       child:CustomDropdownButton<String>(
-                      items:  List.generate(200, (index) => "${((index + 100) / 100).toStringAsFixed(2)} cm"),
+                      items:  List.generate(200, (index) => "${((index + 100) / 100).toStringAsFixed(2)} m"),
                       value: "Height",
                       controller: userHeighController,
+                      borderColor: const Color.fromRGBO(93, 93, 93, 1), 
+                      fillColor: const Color.fromRGBO(93, 93, 93, 1),
+                      textColor: Colors.white,
+                      popupTextColor: Colors.black,
+                      popupBackgroundColor: Colors.white, 
                       onChanged: (value){
                         setState(() {
                           userHeighController.text = value ?? '';
@@ -145,6 +149,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       items:   List.generate(342, (index) =>'${(30 + (index * 0.5)).toStringAsFixed(1)} kg'),
                       value: "Weight",
                       controller: userWeightController,
+                      borderColor: const Color.fromRGBO(93, 93, 93, 1), 
+                      fillColor: const Color.fromRGBO(93, 93, 93, 1),
+                      textColor: Colors.white,
+                      popupTextColor: Colors.black, 
+                      popupBackgroundColor: Colors.white, 
                       onChanged: (value){
                         setState(() {
                           userWeightController.text = value ?? '';
@@ -169,6 +178,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         items: const ['Male', 'Female'],
                         value: "Sex",
                         controller: userSexController,
+                        borderColor: const Color.fromRGBO(93, 93, 93, 1), 
+                        fillColor: const Color.fromRGBO(93, 93, 93, 1),
+                        textColor: Colors.white,
+                        popupTextColor: Colors.black, 
+                        popupBackgroundColor: Colors.white,  
                         onChanged: (value){
                         setState(() {
                           userSexController.text = value ?? '';
@@ -186,6 +200,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       items: const ['BULK', 'CUT', 'MAINTAIN'],
                       value: "Objective",
                       controller: userObjectiveController,
+                      borderColor: const Color.fromRGBO(93, 93, 93, 1), 
+                      fillColor: const Color.fromRGBO(93, 93, 93, 1),
+                      textColor: Colors.white,
+                      popupTextColor: Colors.black, 
+                      popupBackgroundColor: Colors.white, 
                       onChanged: (value){
                         setState(() {
                           userObjectiveController.text = value ?? '';

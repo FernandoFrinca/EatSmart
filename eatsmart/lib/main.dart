@@ -1,9 +1,13 @@
+// ignore_for_file: use_key_in_widget_constructors
+import 'package:eatsmart/Home_page.dart';
+import 'package:eatsmart/Profile_page.dart';
 import 'package:eatsmart/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -16,9 +20,67 @@ class MyApp extends StatelessWidget {
           displayLarge: TextStyle(fontSize: 32.0, fontFamily: 'Signika', fontWeight: FontWeight.bold),
         ),
       ),
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }
 
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+  @override
+  State<MainScreen> createState() => MainPage();
+}
+
+class MainPage extends State<MainScreen> {
+  int _selectedIndex = 0;
+  final List<Widget> _widgetOptions = <Widget>[
+    const HomeScreen(),
+    const ProfileScreen(),
+  ];
+  void _onItemTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: _widgetOptions
+              .elementAt(_selectedIndex)), 
+        bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTap,
+        backgroundColor: Colors.white,
+        unselectedItemColor: const Color.fromARGB(255, 227, 232, 227),
+        selectedItemColor: const Color.fromRGBO(165, 221, 155, 1.0),
+        iconSize: 30,
+        selectedFontSize: 15,
+        items: const <BottomNavigationBarItem>[
+          /*BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),*/
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          /*BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code_scanner),
+            label: 'Scanner',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.admin_panel_settings),
+            label: 'Admin',
+          ),*/
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    );
+  }
+}
 
