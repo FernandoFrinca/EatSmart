@@ -15,7 +15,7 @@ Future<bool> register_function(String lastname, String firstname, String email, 
   bool addFlagObjective = true;
   bool addFlagPantry = true;
   String hashedPassword="";
-  //Please fill in all fields
+
   if (lastname == '') {
     addFlagLastname=false;
   }
