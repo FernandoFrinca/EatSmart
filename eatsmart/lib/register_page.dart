@@ -91,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               icon: Icons.person,
               label: 'Last name',
               hidden: false,
-              borderColor: const Color.fromRGBO(222, 216, 109,1),
+              borderColor: const Color.fromRGBO(255, 255, 255, 1),
               fillColor: const Color.fromRGBO(222, 216, 109,1),
               controller: lastNameController,
             ),
