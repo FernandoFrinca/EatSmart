@@ -74,9 +74,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 textSize: 18.0,
                 onTap: () {
                   Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const EditProfileScreen()),
-                  );
+                    context,
+                    MaterialPageRoute(builder: (context) => EditProfileScreen()),
+                  ).then((_) {
+                    showName();
+                  });
                   print('Edit Profile tapped');
                 },
                 height: screenHeight * 0.06,

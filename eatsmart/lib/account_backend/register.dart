@@ -17,27 +17,35 @@ Future<bool> register_function(String lastname, String firstname, String email, 
   String hashedPassword="";
 
   if (lastname == '') {
+    print("intra1");
     addFlagLastname=false;
   }
   if (firstname == '') {
+    print("intra2");
     addFlagFirstname=false;
   }
   if (email == '') {
+    print("intra3");
     addFlagEmail=false;
   }
   if (password == '') {
+    print("intra4");
     addFlagPassword=false;
   }
   if (sex == '') {
+    print("intra5");
     addFlagSex=false;
   }
   if (height == 0) {
+    print("intra6");
     addFlagHeight=false;
   }
   if (weight == 0) {
+    print("intra7");
     addFlagWeight=false;
   }
   if (objective == '') {
+    print("intra8");
     addFlagObjective=false;
   }
   //conect to database
@@ -56,6 +64,7 @@ try{
     if(password != "") {
       hashedPassword = password.hashCode.toString();
     } else{
+      print("intra9");
       addFlagPassword = false;
     }
 
@@ -81,7 +90,6 @@ try{
       print("\n email ok\n");
     }
 
-    //add element to the database
     if(addFlagLastname && addFlagFirstname && addFlagEmail && addFlagPassword && addFlagImage && addFlagSex && addFlagHeight && addFlagWeight && addFlagObjective && addFlagPantry){
       await conn.query('''
         INSERT INTO users (lastname, firstname, email, password, image, sex, height, weight, objective, pantry_id)
@@ -91,13 +99,14 @@ try{
     }
     else{
       await conn.close();
-      print("register fail");
+      print("register fail1");
       return true;
     }
   }
   catch(e){
     await conn.close();
-    print("register fail");
+    print("register fail2");
     return true;
   }
 }
+

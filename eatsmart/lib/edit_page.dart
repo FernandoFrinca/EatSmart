@@ -21,10 +21,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordConfirmController = TextEditingController();
-  String? _selectedSex;
-  double? _selectedHeight;
-  double? _selectedWeight;
-  String? _selectedObjective;
+  String _selectedSex="";
+  double _selectedHeight=0;
+  double _selectedWeight=0;
+  String _selectedObjective="";
+  String _selectedImage="";
+
+  Future<bool> _handleEdit() async {
+    int userID = getID();
+    String firstName = _firstNameController.text;
+    String lastName = _lastNameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    String passwordConfirm = _passwordConfirmController.text;
+    print("Registering with:$userID, $firstName, $lastName, $email, $password, $passwordConfirm, $_selectedSex, $_selectedHeight, $_selectedWeight, $_selectedObjective"); 
+    await updateUserData(userID,lastName,firstName,email,password,passwordConfirm,_selectedImage,_selectedSex,_selectedHeight,_selectedWeight,_selectedObjective,1);
+    return true;
+  }
 
   @override
   void initState() {
@@ -68,7 +81,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () {
-              
+              _handleEdit();
             },
           )
         ],
@@ -159,7 +172,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   displayText: (String? value) => value ?? "Select Sex",
                   onChanged: (String? newValue) {
                     setState(() {
-                      _selectedSex = newValue;
+                      _selectedSex = newValue!;
                     });
                   },
                   controller: TextEditingController(),
@@ -182,7 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Expanded(
                 child: CustomTextField(
                   controller: TextEditingController(
-                      text: _selectedHeight?.toString() ?? ""),
+                      text: _selectedHeight.toString()),
                   icon: Icons.height,
                   label: "Height (m)",
                   hidden: false,
@@ -202,7 +215,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       value?.toString() ?? "Select Height",
                   onChanged: (double? newValue) {
                     setState(() {
-                      _selectedHeight = newValue;
+                      _selectedHeight = newValue!;
                     });
                   },
                   borderColor: Colors.green,
@@ -225,7 +238,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Expanded(
                 child: CustomTextField(
                   controller: TextEditingController(
-                      text: _selectedWeight?.toString() ?? ""),
+                      text: _selectedWeight.toString()),
                   icon: Icons.scale_sharp,
                   label: "Weight (kg)",
                   hidden: false,
@@ -245,7 +258,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       value?.toString() ?? "Select Weight",
                   onChanged: (double? newValue) {
                     setState(() {
-                      _selectedWeight = newValue;
+                      _selectedWeight = newValue!;
                     });
                   },
                   borderColor: Colors.green,
@@ -288,7 +301,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   displayText: (String? value) => value ?? "Select Objective",
                   onChanged: (String? newValue) {
                     setState(() {
-                      _selectedObjective = newValue;
+                      _selectedObjective = newValue!;
                     });
                   },
                   controller: TextEditingController(),

@@ -262,3 +262,83 @@ Future<String> get_objective(int ID) async {
 
   return extractedObjective;
 }
+
+Future<bool> updateUserData(
+    int userId,
+    String? lastname,
+    String? firstname,
+    String? email,
+    String? password,
+    String? confirmPassword,
+    String? image,
+    String? sex,
+    double? height,
+    double? weight,
+    String? objective,
+    int? pantryId
+) async {
+    bool updateFlag = true;
+    String hashedPassword = "";
+
+    final conn = PostgreSQLConnection(
+        '10.0.2.2',
+        5432,
+        'smart',
+        username: 'postgres',
+        password: 'postgres',
+    );
+    await conn.open();
+    print('Connected to Postgres database...');
+
+    try {
+        final userExists = await conn.query(
+            'SELECT COUNT(*) FROM users WHERE id = @userId',
+            substitutionValues: {
+                'userId': userId
+            }
+        );
+
+        if (userExists[0][0] == 0) {
+            print("User not found.");
+            updateFlag = false;
+        } else {
+            
+            List<String> updates = [];
+            Map<String, dynamic> substitutionValues = {'userId': userId};
+
+            if (password != null && confirmPassword != null) {
+                if (password == confirmPassword) {
+                    hashedPassword = password.hashCode.toString();
+                    updates.add('password = @hashedPassword');
+                    substitutionValues['hashedPassword'] = hashedPassword;
+                } else {
+                    print("Password and confirm password do not match.");
+                    updateFlag = false;
+                }
+            }
+
+            if (lastname != null) { updates.add('lastname = @lastname'); substitutionValues['lastname'] = lastname; }
+            if (firstname != null) { updates.add('firstname = @firstname'); substitutionValues['firstname'] = firstname; }
+            if (email != null) { updates.add('email = @email'); substitutionValues['email'] = email; }
+            if (image != null) { updates.add('image = @image'); substitutionValues['image'] = image; }
+            if (sex != null) { updates.add('sex = @sex'); substitutionValues['sex'] = sex; }
+            if (height != null) { updates.add('height = @height'); substitutionValues['height'] = height; }
+            if (weight != null) { updates.add('weight = @weight'); substitutionValues['weight'] = weight; }
+            if (objective != null) { updates.add('objective = @objective'); substitutionValues['objective'] = objective; }
+            if (pantryId != null) { updates.add('pantry_id = @pantryId'); substitutionValues['pantryId'] = pantryId; }
+
+            if (updates.isNotEmpty && updateFlag) {
+                String query = 'UPDATE users SET ' + updates.join(', ') + ' WHERE id = @userId';
+                await conn.query(query, substitutionValues: substitutionValues);
+            }
+        }
+
+        await conn.close();
+        return updateFlag;
+    } catch (e) {
+        await conn.close();
+        print("Update failed: ${e.toString()}");
+        return false;
+    }
+}
+

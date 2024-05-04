@@ -2,6 +2,7 @@
 import 'package:eatsmart/Home_page.dart';
 import 'package:eatsmart/Profile_page.dart';
 import 'package:eatsmart/login_page.dart';
+import 'package:eatsmart/pantry_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,6 +36,7 @@ class MainPage extends State<MainScreen> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
+    const PantryScreen(),
     const ProfileScreen(),
   ];
   void _onItemTap(int index) {
@@ -66,10 +68,10 @@ class MainPage extends State<MainScreen> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          /*BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code_scanner),
-            label: 'Scanner',
-          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.food_bank),
+            label: 'Pantry',
+          ),/*
           BottomNavigationBarItem(
             icon: Icon(Icons.admin_panel_settings),
             label: 'Admin',
