@@ -42,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String userObjective = userObjectiveController.text;
     print("Registering with: $firstName, $lastName, $email, $password, $userHeigh, $userWeight, $userSex, $userObjective"); 
 
-    flagRegister = await  register_function(firstNameController.text, lastNameController.text, emailController.text,  passwordController.text, "image", userSexController.text, userHeigh, userWeight, userObjectiveController.text, 1);
+    flagRegister = await  register_function(firstNameController.text, lastNameController.text, emailController.text,  passwordController.text, "Chowder", userSexController.text, userHeigh, userWeight, userObjectiveController.text, 1);
     
     if (flagRegister == false) {
       setState(() {

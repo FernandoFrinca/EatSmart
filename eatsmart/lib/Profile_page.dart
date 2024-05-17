@@ -1,4 +1,3 @@
-// ignore_for_file: file_names, use_super_parameters, library_private_types_in_public_api, avoid_print
 import 'package:eatsmart/edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:eatsmart/account_backend/global.dart';
@@ -15,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String? firstName; 
   String? lastName; 
+  String? profilePicture; 
 
   @override
   void initState() {
@@ -26,11 +26,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     int userID = getID(); 
     String? fetchedfirstName = await get_firstName(userID); 
     String? fetchedlastName = await get_lastName(userID);
+    String? fetchedImage = await get_image(userID);
     
     if (mounted) { 
       setState(() {
         firstName = fetchedfirstName;
         lastName = fetchedlastName;
+        profilePicture = fetchedImage;
       });
     }
   }
@@ -47,9 +49,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: screenHeight * 0.15),
-              const CircleAvatar(
-                radius: 120,
-                backgroundImage: AssetImage('images/chowder.png'),
+              Container(
+                width: 240,
+                height: 240,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage('images/$profilePicture.png'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
               SizedBox(height: screenHeight * 0.01),
               Text(
