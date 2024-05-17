@@ -342,3 +342,39 @@ Future<bool> updateUserData(
     }
 }
 
+Future<String> get_image(int ID) async {
+  final conn = PostgreSQLConnection(
+    '10.0.2.2', 
+    5432,
+    'smart',
+    username: 'postgres',
+    password: 'postgres',
+  );
+
+  String extractedImage = "";
+
+  try {
+    await conn.open();
+    print('Connected to the Postgres database...');
+
+    var result = await conn.query(
+      'SELECT image FROM users WHERE id = @id',
+      substitutionValues: {'id': ID}
+    );
+
+    if (result.isNotEmpty) {
+      extractedImage = result.first[0] as String;
+    } else {
+      print("No user found with ID: $ID");
+      extractedImage = "No user found";
+    }
+  } catch (e) {
+    print('Failed to connect or execute query: $e');
+  } finally {
+    await conn.close();
+    print('Database connection closed.');
+  }
+
+  return extractedImage;
+}
+

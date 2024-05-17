@@ -21,11 +21,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordConfirmController = TextEditingController();
-  String _selectedSex="";
-  double _selectedHeight=0;
-  double _selectedWeight=0;
-  String _selectedObjective="";
-  String _selectedImage="";
+  String _selectedSex = "";
+  double _selectedHeight = 0;
+  double _selectedWeight = 0;
+  String _selectedObjective = "";
+  String _selectedImage = "";
 
   Future<bool> _handleEdit() async {
     int userID = getID();
@@ -34,8 +34,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     String email = _emailController.text;
     String password = _passwordController.text;
     String passwordConfirm = _passwordConfirmController.text;
-    print("Registering with:$userID, $firstName, $lastName, $email, $password, $passwordConfirm, $_selectedSex, $_selectedHeight, $_selectedWeight, $_selectedObjective"); 
-    await updateUserData(userID,lastName,firstName,email,password,passwordConfirm,_selectedImage,_selectedSex,_selectedHeight,_selectedWeight,_selectedObjective,1);
+
+    if (password.isNotEmpty && password == passwordConfirm) {
+      print(
+          "Editing with: $userID, $firstName, $lastName, $email, $password, $_selectedSex, $_selectedHeight, $_selectedWeight, $_selectedObjective");
+      await updateUserData(
+          userID,
+          lastName,
+          firstName,
+          email,
+          password,
+          passwordConfirm,
+          _selectedImage,
+          _selectedSex,
+          _selectedHeight,
+          _selectedWeight,
+          _selectedObjective,
+          1);
+    } else {
+      print(
+          "Editing with: $userID, $firstName, $lastName, $email, NO PASSWORD, $_selectedSex, $_selectedHeight, $_selectedWeight, $_selectedObjective");
+      await updateUserData(
+          userID,
+          lastName,
+          firstName,
+          email,
+          null,
+          null,
+          _selectedImage,
+          _selectedSex,
+          _selectedHeight,
+          _selectedWeight,
+          _selectedObjective,
+          1);
+    }
+
     return true;
   }
 
@@ -57,15 +90,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     if (mounted) {
       setState(() {
-        _firstNameController.text =
-            fetchedFirstName; 
-        _lastNameController.text =
-            fetchedLastName; 
-        _emailController.text = fetchedEmail;
-        _selectedSex = fetchedSex;
-        _selectedHeight = fetchedHeight;
-        _selectedWeight = fetchedWeight;
-        _selectedObjective = fetchedObjective;
+        _firstNameController.text = fetchedFirstName ?? '';
+        _lastNameController.text = fetchedLastName ?? '';
+        _emailController.text = fetchedEmail ?? '';
+        _selectedSex = fetchedSex ?? '';
+        _selectedHeight = fetchedHeight ?? 0;
+        _selectedWeight = fetchedWeight ?? 0;
+        _selectedObjective = fetchedObjective ?? '';
       });
     }
   }
@@ -181,8 +212,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   textColor: Colors.green,
                   popupTextColor: Colors.black,
                   popupBackgroundColor: Colors.white,
-                  width: screenWidth * 0.021, 
-                  height: screenHeight * 0.068, 
+                  width: screenWidth * 0.021,
+                  height: screenHeight * 0.068,
                 ),
               ),
             ],
@@ -194,8 +225,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               Expanded(
                 child: CustomTextField(
-                  controller: TextEditingController(
-                      text: _selectedHeight.toString()),
+                  controller:
+                      TextEditingController(text: _selectedHeight.toString()),
                   icon: Icons.height,
                   label: "Height (m)",
                   hidden: false,
@@ -237,8 +268,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             children: [
               Expanded(
                 child: CustomTextField(
-                  controller: TextEditingController(
-                      text: _selectedWeight.toString()),
+                  controller:
+                      TextEditingController(text: _selectedWeight.toString()),
                   icon: Icons.scale_sharp,
                   label: "Weight (kg)",
                   hidden: false,
@@ -310,8 +341,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   textColor: Colors.green,
                   popupTextColor: Colors.black,
                   popupBackgroundColor: Colors.white,
-                  width: screenWidth * 0.021, 
-                  height: screenHeight * 0.068, 
+                  width: screenWidth * 0.021,
+                  height: screenHeight * 0.068,
                 ),
               ),
             ],
@@ -320,8 +351,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             height: screenHeight * 0.015,
           ),
           ElevatedButton(
-            onPressed: () {
-              
+            onPressed: () async {
+               _selectedImage = (await showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => const Dialog.fullscreen(
+                  child: CircleAvatarList(
+                    images: [
+                      'images/Chowder.png',
+                      'images/Panini.png',
+                      'images/Shnitzel.png',
+                      'images/Truffles.png'
+                    ],
+                    texts: ['Chowder', 'Panini', 'Shnitzel', 'Truffles'],
+                  ),
+                ),
+              ))!;
             },
             child: const Text('Update Profile Picture'),
           ),

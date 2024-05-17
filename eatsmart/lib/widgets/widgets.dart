@@ -542,3 +542,90 @@ class MenuItem extends StatelessWidget {
 }
 
 
+
+class CircleAvatarList extends StatelessWidget {
+  final List<String> images;
+  final List<String> texts;
+
+  const CircleAvatarList({
+    Key? key,
+    required this.images,
+    required this.texts,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      body: Column(
+        children: [
+          SizedBox(height: screenHeight * 0.05),
+          Text(
+            'Choose your profile picture',
+            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                  color: const Color.fromRGBO(165, 221, 155, 1.0),
+                  fontSize: 54.0,
+                ),
+            textAlign: TextAlign.center,
+          ),
+          Expanded(
+            child: Center(
+              child: SizedBox(
+                height: screenHeight * 0.45,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: images.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(left: screenWidth * 0.2, right: screenWidth * 0.2),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: screenHeight * 0.03),
+                          Container(
+                            width: 240,
+                            height: 240,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(images[index]),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
+                          TextButton(
+                            onPressed: () {
+                              
+                              Navigator.pop(context, texts[index]);
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.green,
+                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                              backgroundColor: Colors.green[50],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                side: BorderSide(color: Colors.green),
+                              ),
+                            ),
+                            child: Text(
+                              texts[index],
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
