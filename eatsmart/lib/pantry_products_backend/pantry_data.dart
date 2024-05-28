@@ -1,3 +1,7 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
+import 'dart:convert';
+
 import 'package:eatsmart/pantry_products_backend/type.dart';
 import 'package:postgres/postgres.dart';
 
@@ -227,4 +231,77 @@ Future<void> addProduct(String name, int pantry_id, int count, String quantity) 
     print('Error adding the product: $e');
   } 
 
+}
+
+
+Future<void> sendProductsToChat(int user_id) async {
+  PostgreSQLConnection conn;
+  List<int> pantryIds = [];
+  List<PantryItem> items = [];
+  
+  try {
+    conn = PostgreSQLConnection(
+      '10.0.2.2',
+      5432,
+      'smart',
+      username: 'postgres',
+      password: 'postgres',
+    );
+    await conn.open();
+    print('Connected to Postgres database for retrieving products...');
+
+    var objectiveResult = await conn.query(
+      'SELECT objective FROM users WHERE id = @user',
+      substitutionValues: {
+        'user': user_id,
+      }
+    );
+
+    String objective = objectiveResult.isNotEmpty ? objectiveResult.first[0] as String : '';
+
+    var results = await conn.query(
+      'SELECT id FROM pantries WHERE user_id = @user',
+      substitutionValues: {
+        'user': user_id,
+      }
+    );
+
+    for (var row in results) {
+      pantryIds.add(row[0]);
+    }
+
+    for (int i = 0; i < pantryIds.length; i++) {
+      var results_pantry = await conn.query(
+        'SELECT id, name, count, quantity, pantry_id FROM products WHERE pantry_id = @id_pantry',
+        substitutionValues: {'id_pantry': pantryIds[i]}
+      );
+
+      for (var row_pantry in results_pantry) {
+        PantryItem item = PantryItem(
+          row_pantry[0] as int,
+          row_pantry[2] as int,
+          row_pantry[4] as int,
+          name: row_pantry[1] as String,
+          quantity: row_pantry[3] as String
+        );
+        items.add(item);
+      }
+    }
+    
+    List<Map<String, dynamic>> jsonList = items.map((item) => item.toJson()).toList();
+    Map<String, dynamic> finalJson = {
+      'objective': objective,
+      'products': jsonList,
+    };
+    String jsonString = jsonEncode(finalJson);
+  
+    print('Pantry IDs: $pantryIds');
+    for (var item in items) {
+      print('Product: ${item.id}, ${item.name}, ${item.count}, ${item.quantity}, ${item.pantry_id}');
+    }
+    print('JSON: $jsonString');
+    print('Products retrieved successfully.');
+  } catch (e) {
+    print('Error retrieving the products: $e');
+  } 
 }

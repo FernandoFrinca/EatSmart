@@ -415,9 +415,26 @@ class _PantryScreenState extends State<PantryScreen> {
                 side: BorderSide.none,
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                int userId = getID();
+                sendProductsToChat(userId);
+              },
+              child: Text('PrintData'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color.fromRGBO(165, 221, 155, 1.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                side: BorderSide.none,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+
+

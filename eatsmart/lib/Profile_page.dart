@@ -1,4 +1,5 @@
 import 'package:eatsmart/edit_page.dart';
+import 'package:eatsmart/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:eatsmart/account_backend/global.dart';
 import 'package:eatsmart/account_backend/profile_data.dart';
@@ -20,6 +21,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     showName(); 
+  }
+
+  Future<void> _logOut(BuildContext context) async {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+      (Route<dynamic> route) => false,
+    );
   }
 
   Future<void> showName() async {
@@ -110,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 iconSize: 30.0,
                 textSize: 18.0,
                 onTap: () {
+                  _logOut(context);
                   print('Log Out tapped');
                 },
                 height: screenHeight * 0.06,

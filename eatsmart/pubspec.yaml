@@ -34,6 +34,8 @@ dependencies:
   postgres: ^2.2.0
   barcode_scan2: ^4.1.4
   http: ^1.2.1
+  url_launcher: ^6.1.6
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -73,6 +75,13 @@ flutter:
     - images/Truffles.png
     - images/Panini.png
     - images/Shnitzel.png
+    - images/salad.gif
+    - images/salad2.gif
+    - images/carne.gif
+    - images/salad.png
+    - images/pasta.gif
+    - images/juice.gif
+    - images/grill.gif
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

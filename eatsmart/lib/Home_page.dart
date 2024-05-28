@@ -1,11 +1,27 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
+
 import 'package:eatsmart/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
   _HomeScreenState createState() => _HomeScreenState();
+}
+
+void _launchURL() async {
+  const url = 'https://www.healthyfood.com/';
+  
+  if (await canLaunchUrlString(url)) {
+    await launchUrlString(url, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -39,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                
                 InfoCard(
                   width: screenWidth * 0.9, 
                   height: screenHeight * 0.25, 
@@ -47,9 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   buttonText: 'Explore Now', 
                   backgroundColor: const Color(0xfffff8eb),
                   buttonColor: const Color(0xfff2c18d), 
-                  onPressed: () {
-                    print('Button pressed!');
-                  },
+                  onPressed: _launchURL,
                 ),
               ],
             ),
@@ -87,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 children: [
                   CustomCard(
-                    iconData: Icons.local_dining,
+                    // iconData: Icons.local_dining, 
                     text: 'Salad',
                     onTap: () {
                       print('Salad card tapped!');
@@ -97,42 +112,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     iconColor: Colors.orange.shade600,
                     width: 120,
                     height: 120,
+                    imageProvider: AssetImage('images/salad2.gif'), 
                   ),
                   CustomCard(
-                    iconData: Icons.local_dining,
-                    text: 'Salad',
+                    //iconData: Icons.local_dining,
+                    text: 'Meat',
                     onTap: () {
-                      print('Salad card tapped!');
+                      print('Meat card tapped!');
                     },
                     color: Colors.lightGreen.shade100,
                     textColor: Colors.green.shade900,
                     iconColor: Colors.green.shade600,
                     width: 120,
                     height: 120,
+                    imageProvider: AssetImage('images/grill.gif'),
                   ),
                   CustomCard(
-                    iconData: Icons.local_dining,
-                    text: 'Salad',
+                    //iconData: Icons.local_dining,
+                    text: 'Pasta',
                     onTap: () {
-                      print('Salad card tapped!');
+                      print('pasta card tapped!');
                     },
                     color: Colors.orange.shade100,
                     textColor: Colors.orange.shade900,
                     iconColor: Colors.orange.shade600,
                     width: 120,
                     height: 120,
+                    imageProvider: AssetImage('images/pasta.gif'),
                   ),
                   CustomCard(
-                    iconData: Icons.local_dining,
-                    text: 'Salad',
+                    //iconData: Icons.local_dining,
+                    text: 'Juice',
                     onTap: () {
-                      print('Salad card tapped!');
+                      print('Juice card tapped!');
                     },
                     color: Colors.lightGreen.shade100,
                     textColor: Colors.green.shade900,
                     iconColor: Colors.green.shade600,
                     width: 120,
                     height: 120,
+                    imageProvider: AssetImage('images/juice.gif'),
                   ),
                 ],
               ),

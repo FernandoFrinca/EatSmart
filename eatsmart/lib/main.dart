@@ -3,6 +3,7 @@ import 'package:eatsmart/Home_page.dart';
 import 'package:eatsmart/Profile_page.dart';
 import 'package:eatsmart/login_page.dart';
 import 'package:eatsmart/pantry_page.dart';
+import 'package:eatsmart/scan_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,8 +34,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainPage extends State<MainScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   final List<Widget> _widgetOptions = <Widget>[
+    BarcodeScannerPage(),
     const HomeScreen(),
     const PantryScreen(),
     const ProfileScreen(),
@@ -60,10 +62,10 @@ class MainPage extends State<MainScreen> {
         iconSize: 30,
         selectedFontSize: 15,
         items: const <BottomNavigationBarItem>[
-          /*BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),*/
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: 'Scan',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -71,11 +73,7 @@ class MainPage extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.food_bank),
             label: 'Pantry',
-          ),/*
-          BottomNavigationBarItem(
-            icon: Icon(Icons.admin_panel_settings),
-            label: 'Admin',
-          ),*/
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

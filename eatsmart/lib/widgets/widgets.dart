@@ -287,18 +287,19 @@ class CustomButton extends StatelessWidget {
 }
 
 class CustomCard extends StatelessWidget {
-  final IconData iconData;
+  final IconData? iconData; 
   final String text;
   final VoidCallback onTap;
   final Color color;
   final Color textColor;
   final Color iconColor;
   final double width; 
-  final double height; 
+  final double height;
+  final ImageProvider? imageProvider; 
 
   const CustomCard({
     super.key,
-    required this.iconData,
+    this.iconData, 
     required this.text,
     required this.onTap,
     this.color = const Color.fromRGBO(229, 243, 228, 1),
@@ -306,6 +307,7 @@ class CustomCard extends StatelessWidget {
     this.iconColor = Colors.black54,
     this.width = 80, 
     this.height = 100, 
+    this.imageProvider,
   });
 
   @override
@@ -321,12 +323,15 @@ class CustomCard extends StatelessWidget {
         child: Container(
           width: width, 
           height: height, 
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, 
             children: <Widget>[
-              Icon(iconData, color: iconColor, size: 24), 
-              const SizedBox(height: 10),
+              if (imageProvider != null) 
+                Image(image: imageProvider!, height: 88, width: 88)
+              else if (iconData != null) 
+                Icon(iconData, color: iconColor, size: 24),
+              const SizedBox(height: 15),
               Text(
                 text,
                 style: TextStyle(
