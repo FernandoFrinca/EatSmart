@@ -1,6 +1,11 @@
 // ignore_for_file: avoid_print
 import 'dart:io';
 
+import 'package:eatsmart/generateMenu.dart';
+import 'package:eatsmart/menuGenerator/juice.dart';
+import 'package:eatsmart/menuGenerator/meat.dart';
+import 'package:eatsmart/menuGenerator/pasta.dart';
+import 'package:eatsmart/menuGenerator/salad.dart';
 import 'package:eatsmart/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -75,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 CustomCardButton(
                   label: 'Generate a menu',
                   onPressed: () {
-                    print('Button pressed!');
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GenerateMenu()),
+                    );
                   },
                   width: screenWidth * 0.92, 
                   height: screenHeight * 0.12, 
@@ -105,7 +113,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     // iconData: Icons.local_dining, 
                     text: 'Salad',
                     onTap: () {
-                      print('Salad card tapped!');
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GenerateMenuSalad()),
+                    );
                     },
                     color: Colors.orange.shade100,
                     textColor: Colors.orange.shade900,
@@ -118,7 +129,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     //iconData: Icons.local_dining,
                     text: 'Meat',
                     onTap: () {
-                      print('Meat card tapped!');
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GenerateMenuMeat()),
+                    );
                     },
                     color: Colors.lightGreen.shade100,
                     textColor: Colors.green.shade900,
@@ -131,7 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     //iconData: Icons.local_dining,
                     text: 'Pasta',
                     onTap: () {
-                      print('pasta card tapped!');
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GenerateMenuPasta()),
+                    );
                     },
                     color: Colors.orange.shade100,
                     textColor: Colors.orange.shade900,
@@ -144,7 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     //iconData: Icons.local_dining,
                     text: 'Juice',
                     onTap: () {
-                      print('Juice card tapped!');
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GenerateMenuJuice()),
+                    );
                     },
                     color: Colors.lightGreen.shade100,
                     textColor: Colors.green.shade900,
